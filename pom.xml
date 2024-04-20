@@ -15,6 +15,7 @@
     <description>Web_Member_Mangement project for Spring Boot</description>
     <properties>
         <java.version>21</java.version>
+        <exec.mainClass>com.member_management.main</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
