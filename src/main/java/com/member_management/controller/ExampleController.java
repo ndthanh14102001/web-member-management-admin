@@ -1,6 +1,6 @@
 package com.member_management.controller;
 import com.member_management.modules._UsageInformation;
-import com.member_management.service.UsageInformationService;
+import com.member_management.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class UsageInformationController {
+public class ExampleController {
 
-    private final UsageInformationService usageInformationService;
+    private final ExampleService usageInformationService;
 
     @Autowired
-    public UsageInformationController(UsageInformationService usageInformationService) {
+    public ExampleController(ExampleService usageInformationService) {
         this.usageInformationService = usageInformationService;
     }
 

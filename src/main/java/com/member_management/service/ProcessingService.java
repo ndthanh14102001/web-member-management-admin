@@ -3,18 +3,17 @@ package com.member_management.service;
 import com.member_management.repository.DeviceRepository;
 import com.member_management.repository.MemberRepository;
 import com.member_management.repository.ProcessingRepository;
-import com.member_management.repository.UsageInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsageInformationService {
+public class ProcessingService {
 
-    private final UsageInformationRepository informationRepository;
+    private final ProcessingRepository processingRepository;
 
     @Autowired
-    public UsageInformationService(UsageInformationRepository informationRepository) {
-        this.informationRepository = informationRepository;
+    public ProcessingService(ProcessingRepository processingRepository) {
+        this.processingRepository = processingRepository;
     }
 
 }
