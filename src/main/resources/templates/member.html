@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Member Manager</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="my-4">Members List</h1>
+            
+            <form class="form-inline" method="post" action="/member">
+                <div class="form-group  mr-2">
+                    <input class="form-control" type="text" name="keyword" placeholder="Enter keyword" th:value="${keyword}"/>
+                </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+            
+            <div class="mb-3">
+                <a href="add-member" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Thêm thành viên
+                </a>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã số thành viên</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Họ tên</th>
+                        <th>Khoa</th>
+                        <th>Ngành</th>
+                        <th>Số điện thoại</th>
+                        <th>More</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="member : ${membersInformationList}">
+                        <td th:text="${member.maTV}"></td>
+                        <td th:text="${member.email}"></td>
+                        <td th:text="${member.password}"></td>
+                        <td th:text="${member.hoTen}"></td>
+                        <td th:text="${member.khoa}"></td>
+                        <td th:text="${member.nganh}"></td>
+                        <td th:text="${member.sdt}"></td>
+                        <td>
+                            <a th:href="@{/edit-member/{memberId}(memberId=${member.maTV})}" class="btn btn-sm btn-info">
+                                <i class="fas fa-edit"></i>  
+                            </a>
+                            <a href="" class="btn btn-sm btn-danger" th:attr="onclick='deleteMember(\'' + ${member.maTV} + '\')'">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            
+            function deleteMember(memberId) {
+                if (confirm("Bạn có chắc chắn muốn xóa thành viên này?")) {
+                    fetch('/delete-member/' + memberId, { method: 'POST' })
+                        .then(response => response.text())
+                        .then(data => {
+                        alert("Xóa thành viên thành công"); // Hiển thị thông báo xóa thành viên thành công
+                        location.reload(); // Tải lại trang danh sách thành viên
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            }
+        </script>
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>
