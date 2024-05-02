@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Usage Information List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="test"></div>
+    <h1 class="my-4">Usage Information List</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>MaTT</th>
+            <th>TGVao</th>
+            <th>TGMuon</th>
+            <th>TGTra</th>
+            <th>MaTV</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>HoTen</th>
+            <th>Khoa</th>
+            <th>Nganh</th>
+            <th>SDT</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usageInformation : ${usageInformationList}">
+            <td th:text="${usageInformation.maTT}"></td>
+            <td th:text="${usageInformation.tGVao}"></td>
+            <td th:text="${usageInformation.tGMuon}"></td>
+            <td th:text="${usageInformation.tGTra}"></td>
+            <td th:text="${usageInformation.maTV.maTV}"></td>
+            <td th:text="${usageInformation.maTV.email}"></td>
+            <td th:text="${usageInformation.maTV.password}"></td>
+            <td th:text="${usageInformation.maTV.hoTen}"></td>
+            <td th:text="${usageInformation.maTV.khoa}"></td>
+            <td th:text="${usageInformation.maTV.nganh}"></td>
+            <td th:text="${usageInformation.maTV.sdt}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

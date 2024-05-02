@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Device</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>>Add Device</h1>
+
+            <form action="/add-device" method="post">
+                <div class="form-group">
+                    <label for="maTV">Mã số thiết bị:</label>
+                    <input type="text" class="form-control" id="maTB" name="maTB" >
+                </div>
+                <div class="form-group">
+                    <label for="tenTB">Tên thiết bị:</label>
+                    <input type="text" class="form-control" id="tenTB" name="tenTB" >
+                </div>
+                <div class="form-group">
+                    <label for="moTa">Mô tả:</label>
+                    <input type="text" class="form-control" id="moTaTB" name="moTaTB" >
+                </div>
+
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </form>
+            <!--<p th:text="${message}"></p>-->
+            <div id="message-container" class="alert alert-success mt-3" style="display: none;"></div>
+            <a href="device" class="btn btn-secondary mt-3">Back</a>
+        </div>
+
+        <script>
+            const message = `[[${message}]]`;
+            const error = `[[${error}]]`;
+            const messageContainer = document.getElementById('message-container');
+            
+            if (message) {
+                messageContainer.textContent = message;
+                messageContainer.classList.add('alert-success');
+                
+            } else if(error){
+                messageContainer.textContent = error;
+                messageContainer.classList.add('alert-danger');
+            }
+            
+            if(message || error) {
+                messageContainer.style.display = 'block';
+                setTimeout(function () {
+                    messageContainer.textContent = '';
+                    messageContainer.style.display = 'none';
+                    messageContainer.classList.remove('success', 'error');
+                }, 10000);
+            }
+            
+        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>
