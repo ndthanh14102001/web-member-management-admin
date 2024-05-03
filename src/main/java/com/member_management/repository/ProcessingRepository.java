@@ -26,7 +26,7 @@ public interface ProcessingRepository extends JpaRepository<_Processing, Integer
                        @Param("soTien") Integer soTien,
                        @Param("ngayXL") Date ngayXL,
                        @Param("trangThaiXL") Integer trangThaiXL,
-                       @Param("maTV") Integer maTV);
+                       @Param("maTV") String maTV);
     @Modifying
     @Query("UPDATE _Processing SET soTien = :soTien, trangThaiXL = :trangThaiXL WHERE maXL = :maXL")
     void updateProcessing(@Param("soTien") double soTien, @Param("trangThaiXL") int trangThaiXL, @Param("maXL") String maXL);

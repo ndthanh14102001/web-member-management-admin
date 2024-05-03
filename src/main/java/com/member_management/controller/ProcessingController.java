@@ -8,9 +8,12 @@ import com.member_management.modules._Member;
 import com.member_management.modules._Processing;
 import com.member_management.service.MemberService;
 import com.member_management.service.ProcessingService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -48,18 +51,29 @@ public class ProcessingController {
         return "processing";
     }
 
-    @PostMapping("/addProcessing")
-    public String addProcessing(@RequestParam("hinhThucXL") String hinhThucXL,
-            @RequestParam("soTien") Integer soTien,
-            @RequestParam("ngayXL") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date ngayXL,
-            @RequestParam("trangThaiXL") Integer trangThaiXL,
+    @GetMapping("/add-processing")
+    public String addProcessing(Model model) {
+        return "add-processing";
+    }
+
+    @PostMapping("/add-processing")
+    public String addProcessing(@RequestParam("hinhthucxuly") String hinhThucXL,
+            @RequestParam(name = "soTien", required = false) Integer soTien,
+            @RequestParam("ngayxuly") String ngayXL,
+            @RequestParam("trangthai") String trangThaiXL,
             @RequestParam("maTV") String maTV,
             RedirectAttributes redirectAttributes) {
-        processingRepository.addProcessing(hinhThucXL, soTien, ngayXL, trangThaiXL, maTV);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = dateFormat.parse(ngayXL);
+            processingRepository.addProcessing(hinhThucXL, soTien, date, Integer.valueOf(trangThaiXL), maTV);
+        } catch (ParseException ex) {
+            Logger.getLogger(ProcessingController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // Redirect or add flash attribute as needed
         redirectAttributes.addFlashAttribute("alertMessage", "Thêm xử lý thành công!");
-        return "redirect:/page_Processing";
+        return "redirect:/processing";
     }
 
     @PostMapping("/updateProcessing")

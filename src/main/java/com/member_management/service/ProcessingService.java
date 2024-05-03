@@ -17,7 +17,7 @@ public class ProcessingService {
     private final ProcessingRepository processingRepository;
 
     @Autowired
-    public ProcessingService(ProcessingRepository processingRepository) {
+    public ProcessingService(ProcessingRepository processingRepository, MemberRepository memberRepository) {
         this.processingRepository = processingRepository;
     }
 
