@@ -17,4 +17,6 @@ public interface MemberRepository extends JpaRepository<_Member, Integer> {
     _Member findByMaTV(@Param("maTV") int maTV);
     @Query("FROM _Member m WHERE m.hoTen LIKE %:keyword%")
     List<_Member> searchMembersByName(@Param("keyword") String keyword);
+    @Query("SELECT m FROM _Member m")
+    List<_Member> findAllMembers();
 }
