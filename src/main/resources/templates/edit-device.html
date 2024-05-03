@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Device</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container">
+<html th:replace="/fragment/page.html
+      :: page('Sửa thông tin thiết bị',~{ :: .content})">
+    <div class="content">
         <h1>Sửa thông tin thiết bị</h1>
-        
+
         <form th:action="@{/edit-device/{deviceId}(deviceId=${device.maTB})}" method="post">
             <div class="form-group">
                 <label for="deviceId">Mã số thiết bị:</label>
@@ -25,5 +20,4 @@
             <button type="submit" class="btn btn-primary">Lưu</button>
         </form>
     </div>
-</body>
 </html>

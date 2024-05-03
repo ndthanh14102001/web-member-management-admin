@@ -1,65 +1,59 @@
-<html>
-    <head>
-        <title>Thiết bị</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    </head>
-    <body>
-        <div class="container">
-            <h1 class="my-4">Danh sách thiết bị</h1>
-            
-            <div class="mb-3">
-                <a href="add-device" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Thêm thiết bị
-                </a>
-            </div>
-            
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Mã số thiết bị</th>
-                        <th>Tên thiết bị</th>
-                        <th>Mô tả</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="device : ${devicesList}">
-                        <td th:text="${device.maTB}"></td>
-                        <td th:text="${device.tenTB}"></td>
-                        <td th:text="${device.moTaTB}"></td>
-                        <td>
-                            <a th:href="@{/edit-device/{deviceId}(deviceId=${device.maTB})}" class="btn btn-sm btn-info">
-                                <i class="fas fa-edit"></i>  
-                            </a>
-                            <a href="" class="btn btn-sm btn-danger" th:attr="onclick='deleteDevice(\'' + ${device.maTB} + '\')'">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<!DOCTYPE html>
+<html th:replace="/fragment/page.html
+      :: page('Danh sách thiết bị',~{ :: .content})">
+    <div class="content">
+        <h1 class="my-4">Danh sách thiết bị</h1>
+
+        <div class="mb-3">
+            <a href="add-device" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm thiết bị
+            </a>
         </div>
-        <script>
-            function deleteDevice(deviceId) {
-                if (confirm("Bạn có chắc chắn muốn xóa thiết bị này?")) {
-                    fetch('/delete-device/' + encodeURIComponent(deviceId), { method: 'POST' })
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã số thiết bị</th>
+                    <th>Tên thiết bị</th>
+                    <th>Mô tả</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="device : ${devicesList}">
+                    <td th:text="${device.maTB}"></td>
+                    <td th:text="${device.tenTB}"></td>
+                    <td th:text="${device.moTaTB}"></td>
+                    <td>
+                        <a th:href="@{/edit-device/{deviceId}(deviceId=${device.maTB})}" class="btn btn-sm btn-info">
+                            <i class="fas fa-edit"></i>  
+                        </a>
+                        <a href="" class="btn btn-sm btn-danger" th:attr="onclick='deleteDevice(\'' + ${device.maTB} + '\')'">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function deleteDevice(deviceId) {
+            if (confirm("Bạn có chắc chắn muốn xóa thiết bị này?")) {
+                fetch('/delete-device/' + encodeURIComponent(deviceId), {method: 'POST'})
                         .then(response => response.text())
                         .then(data => {
-                        alert("Xóa thiết bị thành công");
-                        location.reload();
-                })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
+                            alert("Xóa thiết bị thành công");
+                            location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
             }
-        </script>
-        <!-- Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </body>
+        }
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
