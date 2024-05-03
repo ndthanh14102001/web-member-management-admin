@@ -10,6 +10,7 @@ import com.member_management.service.MemberService;
 import com.member_management.service.ProcessingService;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class ProcessingController {
         this.processingRepository = usageInformationService;
     }
 
-    @GetMapping("/page_Processing")
+    @GetMapping("/processing")
     public String getAllUsageInformation(Model model) {
         List<_Processing> processingList = processingRepository.findAllProcessing();
         List<_Member> maTVWithProcessingList = memberService.findAllUsageInformation();
@@ -44,7 +45,7 @@ public class ProcessingController {
         model.addAttribute("maTVWithProcessingList", maTVWithProcessingList);
         Double totalAmount = processingRepository.calculateTotalAmount();
         model.addAttribute("totalAmount", totalAmount != null ? totalAmount : 0.0);
-        return "page_Processing";
+        return "processing";
     }
 
     @PostMapping("/addProcessing")
