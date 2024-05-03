@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Edit Member</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <h1>Sửa thông tin thành viên</h1>
-        
-        <form th:action="@{/edit-member/{memberId}(memberId=${member.maTV})}" method="post">
-            <div class="form-group">
-                <label for="memberId">Mã số sinh viên:</label>
-                <input type="text" class="form-control" id="memberId" name="maTV" th:value="${member.maTV}" readonly>
-            </div>
-            <div class="form-group">
-                <label for="memberName">Họ tên:</label>
-                <input type="text" class="form-control" id="memberName" name="hoTen" th:value="${member.hoTen}">
-            </div>
-            <div class="form-group">
-                <label for="memberEmail">Email:</label>
-                <input type="email" class="form-control" id="memberEmail" name="email" th:value="${member.email}" readonly>
-            </div>
-            <div class="form-group">
-                <label for="memberEmail">Password:</label>
-                <input type="text" class="form-control" id="memberPassword" name="password" th:value="${member.password}">
-            </div>
-            <div class="form-group">
-                <label for="memberEmail">Khoa:</label>
-                <input type="text" class="form-control" id="memberKhoa" name="khoa" th:value="${member.khoa}">
-            </div>
-            <div class="form-group">
-                <label for="memberEmail">Ngành:</label>
-                <input type="text" class="form-control" id="memberNganh" name="nganh" th:value="${member.nganh}">
-            </div>
-            <div class="form-group">
-                <label for="memberEmail">Số điện thoại:</label>
-                <input type="text" class="form-control" id="memberSDT" name="sdt" th:value="${member.sdt}">
-            </div>
-            <button type="submit" class="btn btn-primary">Lưu</button>
-        </form>
-    </div>
-</body>
+    <head>
+        <title>Edit Member</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Sửa thông tin thành viên</h1>
+
+            <form th:action="@{/edit-member/{memberId}(memberId=${member.maTV})}" method="post">
+                <div class="form-group">
+                    <label for="memberId">Mã số sinh viên:</label>
+                    <input type="text" class="form-control" id="memberId" name="maTV" th:value="${member.maTV}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="memberName">Họ tên:</label>
+                    <input type="text" class="form-control" id="memberName" name="hoTen" th:value="${member.hoTen}">
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">Email:</label>
+                    <input type="email" class="form-control" id="memberEmail" name="email" th:value="${member.email}" readonly>
+                </div>
+                <input type="hidden" class="form-control" id="memberPassword" name="password" th:value="${member.password}">
+                <div class="form-group">
+                    <label for="memberEmail">Khoa:</label>
+                    <input type="text" class="form-control" id="memberKhoa" name="khoa" th:value="${member.khoa}">
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">Ngành:</label>
+                    <input type="text" class="form-control" id="memberNganh" name="nganh" th:value="${member.nganh}">
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">Số điện thoại:</label>
+                    <input type="text" class="form-control" id="memberSDT" name="sdt" th:value="${member.sdt}">
+                </div>
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </form>
+        </div>
+    </body>
 </html>

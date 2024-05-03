@@ -8,13 +8,13 @@
     </head>
     <body>
         <div class="container">
-            <h1 class="my-4">Members List</h1>
+            <h1 class="my-4">Danh sách thành viên</h1>
             
             <form class="form-inline" method="post" action="/member">
                 <div class="form-group  mr-2">
-                    <input class="form-control" type="text" name="keyword" placeholder="Enter keyword" th:value="${keyword}"/>
+                    <input class="form-control" type="text" name="keyword" placeholder="Họ tên" th:value="${keyword}"/>
                 </div>
-                <button class="btn btn-primary" type="submit">Search</button>
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
             </form>
             
             <div class="mb-3">
@@ -28,19 +28,17 @@
                     <tr>
                         <th>Mã số thành viên</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Họ tên</th>
                         <th>Khoa</th>
                         <th>Ngành</th>
                         <th>Số điện thoại</th>
-                        <th>More</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="member : ${membersInformationList}">
                         <td th:text="${member.maTV}"></td>
                         <td th:text="${member.email}"></td>
-                        <td th:text="${member.password}"></td>
                         <td th:text="${member.hoTen}"></td>
                         <td th:text="${member.khoa}"></td>
                         <td th:text="${member.nganh}"></td>

@@ -38,7 +38,7 @@ public class ProcessingController {
     @GetMapping("/page_Processing")
     public String getAllUsageInformation(Model model) {
         List<_Processing> processingList = processingRepository.findAllProcessing();
-        List<_Member> maTVWithProcessingList = memberService.findAllMaTVWithProcessing();
+        List<_Member> maTVWithProcessingList = memberService.findAllUsageInformation();
 
         model.addAttribute("processingList", processingList);
         model.addAttribute("maTVWithProcessingList", maTVWithProcessingList);
