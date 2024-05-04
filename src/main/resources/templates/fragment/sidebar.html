@@ -24,7 +24,7 @@
                         <hr class="hr" />
                         <div class="list-group list-group-flush mx-3 ">
                             <a
-                                href="#"
+                                href="/"
                                 class="list-group-item list-group-item-action py-2 ripple "
                                 id="statistical"
                                 aria-current="true"
@@ -61,7 +61,7 @@
 
             console.log(device);
 
-            if (url.startsWith("/statistical")) {
+            if (url === "/") {
                 statistical.classList.add("active");
             } else if (url.startsWith("/member")) {
                 member.classList.add("active");
