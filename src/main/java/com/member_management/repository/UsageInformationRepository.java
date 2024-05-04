@@ -20,7 +20,10 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
     SELECT u.maTB.maTB,u.maTB.tenTB FROM _UsageInformation u
     WHERE u.maTB NOT IN (
         SELECT u.maTB FROM _UsageInformation u
-        WHERE u.tGVao IS NULL AND u.tGMuon IS NOT NULL AND u.tGTra IS NULL
+        WHERE u.tGVao IS NULL 
+           AND u.tGMuon IS NOT NULL 
+           AND u.tGTra IS NULL
+           AND u.tGDatCho IS NULL
     )
     GROUP BY u.maTB
     UNION
@@ -30,6 +33,23 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
         SELECT u.maTB.maTB FROM _UsageInformation u 
         WHERE u.maTB.maTB IS NOT NULL
     )""")
-    List<_UsageInformation> getAvailableDevices();
-
+    List<Object[]> getAvailableDevices();
+    
+    @Query("""
+    SELECT u.maTB.maTB, u.maTB.tenTB, u.maTV.maTV, u.maTV.hoTen
+    FROM _UsageInformation u
+    WHERE u.tGVao IS NULL AND u.tGMuon IS NOT NULL AND u.tGTra IS NULL
+    """)
+    List<Object[]> getNotAvailableDevices();
+    
+    @Query("""
+    SELECT u.maTB.maTB, u.maTB.tenTB, u.maTV.maTV, u.maTV.hoTen, u.tGDatCho
+    FROM _UsageInformation u
+    WHERE u.tGVao IS NULL 
+           AND u.tGMuon IS NULL 
+           AND u.tGTra IS NULL
+           AND u.tGDatCho IS NOT NULL
+    ORDER BY u.tGDatCho DESC
+    """)
+    List<Object[]> getBookedDevices();
 }

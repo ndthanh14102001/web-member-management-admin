@@ -42,12 +42,9 @@ public class ProcessingController {
     @GetMapping("/processing")
     public String getAllUsageInformation(Model model) {
         List<_Processing> processingList = processingRepository.findAllProcessing();
-        List<_Member> maTVWithProcessingList = memberService.findAllUsageInformation();
 
         model.addAttribute("processingList", processingList);
-        model.addAttribute("maTVWithProcessingList", maTVWithProcessingList);
-        Double totalAmount = processingRepository.calculateTotalAmount();
-        model.addAttribute("totalAmount", totalAmount != null ? totalAmount : 0.0);
+        model.addAttribute("totalAmount", processingList.size());
         return "processing";
     }
 

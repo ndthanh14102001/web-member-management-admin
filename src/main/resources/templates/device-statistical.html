@@ -4,7 +4,17 @@
     <div class="content">
         <h1 class="my-4">Thống kê</h1>
 
-
+        <form method="get" action='/statistical/device' class='d-flex'>
+            <select class="form-select" aria-label="device-status" name="device-status" >
+                <option value="1" th:selected="${deviceStatus == '1'}">Thiết bị sẵn sàng</option>
+                <option value="2" th:selected="${deviceStatus == '2'}">Thiết bị đang được mượn</option>
+                <option value="3" th:selected="${deviceStatus == '3'}">Thiết bị đang được đặt chỗ</option>
+            </select>
+            <button class='btn btn-primary ms-2 d-flex align-items-center'>
+                <i class="fa-solid fa-filter me-2"></i>
+                <span>Lọc</span>
+            </button>
+        </form>
         <h4 class="my-4">Thiết bị</h4>
         <table class="table">
             <thead>
@@ -13,18 +23,20 @@
                     <th>Tên thiết bị</th>
                     <th>Mã thành viên</th>
                     <th>Tên thành viên</th>
-                    <th></th>
+                    <th>Thời gian đặt chỗ</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="device : ${devicesList}">
-                    <td th:text="${device.maTB}"></td>
-                    <td th:text="${device.tenTB}"></td>
-                    <td th:text="${device.moTaTB}"></td>
+                <tr th:each="deviceInfo : ${devices}">
+                    <td th:text="${deviceInfo[0]}"></td>
+                    <td th:text="${deviceInfo[1]}"></td>
+                    <td th:text="${deviceInfo.length >= 3 ? deviceInfo[2] : ''}"></td>
+                    <td th:text="${deviceInfo.length >= 4 ? deviceInfo[3] : ''}"></td>
+                    <td th:text="${deviceInfo.length >= 5 ? #dates.format(deviceInfo[4], 'dd-MM-yyyy HH:mm') : ''}"></td>
                 </tr>
             </tbody>
         </table>
-        <div><strong>Số kết quả: </strong> <span th:text="${totalResult}"></span></div>
+        <div><strong>Số kết quả: </strong> <span th:text="${numberOfDevice}"></span></div>
     </div>
 
     <!-- Bootstrap JS -->

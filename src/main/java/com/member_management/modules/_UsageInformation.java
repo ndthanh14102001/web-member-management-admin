@@ -41,6 +41,9 @@ public class _UsageInformation implements Serializable {
     @Column(name = "TGTra")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tGTra;
+    @Column(name = "TGDatCho")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date tGDatCho;
     @JoinColumn(name = "MaTV", referencedColumnName = "MaTV")
     @ManyToOne(optional = false)
     private _Member maTV;
@@ -101,6 +104,14 @@ public class _UsageInformation implements Serializable {
 
     public void setMaTB(_Device maTB) {
         this.maTB = maTB;
+    }
+
+    public Date getTgDatCho() {
+        return tGDatCho;
+    }
+
+    public void setTgDatCho(Date tGDatCho) {
+        this.tGDatCho = tGDatCho;
     }
 
     @Override

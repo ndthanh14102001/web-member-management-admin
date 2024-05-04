@@ -44,7 +44,7 @@
                     <td th:text="${history.maTV.khoa}"></td>
                     <td th:text="${history.maTV.nganh}"></td>
                     <td th:text="${history.maTV.sdt}"></td>
-                    <td th:text="${history.tGVao}"></td>
+                    <td th:text="${#dates.format(history.tGVao, 'dd-MM-yyyy HH:mm')}"></td>
                 </tr>
             </tbody>
         </table>

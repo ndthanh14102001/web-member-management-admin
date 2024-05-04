@@ -64,7 +64,12 @@ public class StatisticalController {
     }
 
     @GetMapping("/statistical/device")
-    public String getDeviceStatistical() {
+    public String getDeviceStatistical(Model model,
+            @RequestParam(name = "device-status", required = false) String deviceStatus) {
+        List<Object[]> devices = deviceStatus == null ? statisticalService.getDevices(statisticalService.STATISTICAL_AVAILABLE_DEVICES) : statisticalService.getDevices(Integer.parseInt(deviceStatus));
+        model.addAttribute("devices", devices);
+        model.addAttribute("numberOfDevice", devices.size());
+        model.addAttribute("deviceStatus", deviceStatus);
         return "device-statistical";
     }
 }

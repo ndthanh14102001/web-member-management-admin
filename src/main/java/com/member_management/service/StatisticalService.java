@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class StatisticalService {
 
+    public final int STATISTICAL_AVAILABLE_DEVICES = 1;
+    public final int STATISTICAL_NOT_AVAILABLE_DEVICES = 2;
+    public final int STATISTICAL_BOOKED_DEVICES = 3;
     private final UsageInformationRepository usageInformationRepository;
 
     @Autowired
@@ -17,8 +20,22 @@ public class StatisticalService {
         this.usageInformationRepository = usageInformationRepository;
     }
 
-    public List<_UsageInformation> getStudyAreaHistory(Date startDate,Date endDate) {
+    public List<_UsageInformation> getStudyAreaHistory(Date startDate, Date endDate) {
         return usageInformationRepository.getStudyAreaHistory(startDate, endDate);
     }
-;
+
+    public List<Object[]> getDevices(int deviceStatus) {
+        switch (deviceStatus) {
+            case STATISTICAL_NOT_AVAILABLE_DEVICES -> {
+                return usageInformationRepository.getNotAvailableDevices();
+            }
+            case STATISTICAL_BOOKED_DEVICES -> {
+                return usageInformationRepository.getBookedDevices();
+            }
+            default -> {
+                return usageInformationRepository.getAvailableDevices();
+            }
+        }
+
+    }
 }
