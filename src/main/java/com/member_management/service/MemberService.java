@@ -20,6 +20,10 @@ public class MemberService {
         List<_Member> members = memberRepository.getAllMembersInformation();
         return members;
     }
+    public List<_Member> findAllUsageInformation(String maTV) {
+        List<_Member> members = memberRepository.findByMaTV(maTV);
+        return members;
+    }
     
     public List<_Member> searchMembersByName(String keyword) {
         return memberRepository.searchMembersByName(keyword);

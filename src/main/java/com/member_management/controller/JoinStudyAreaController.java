@@ -40,8 +40,13 @@ public class JoinStudyAreaController {
 
     @GetMapping("/join-study-area")
     public String getMembers(Model model,
-            @RequestParam(name = "search-matv", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String startDate) {
-        List<_Member> membersList = memberInformationService.findAllUsageInformation();
+            @RequestParam(name = "search-matv", required = false) String maTV) {
+        List<_Member> membersList = null;
+        if (maTV != null && !"".equals(maTV)) {
+            membersList = memberInformationService.findAllUsageInformation(maTV);
+        } else {
+            membersList = memberInformationService.findAllUsageInformation();
+        }
         model.addAttribute("membersInformationList", membersList);
         return "join-study-area";
     }
