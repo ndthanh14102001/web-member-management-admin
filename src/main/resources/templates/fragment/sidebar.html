@@ -55,6 +55,10 @@
                                 >
                                 <span class="ms-1">Xử lý vi phạm</span>
                             </a>
+
+                            <a href="/member" class="list-group-item list-group-item-action py-2 ripple" id="member">
+                                <i class="fa-solid fa-users"></i><span class="ms-1">Thành viên</span>
+                            </a>
                             <a
                                 href="/join-study-area"
                                 class="list-group-item list-group-item-action py-2 ripple "
@@ -64,14 +68,19 @@
                                 <i class="fa-solid fa-right-to-bracket"></i>
                                 <span class="ms-1">Vào khu vực học tập</span>
                             </a>
-                            <a href="/member" class="list-group-item list-group-item-action py-2 ripple" id="member">
-                                <i class="fa-solid fa-users"></i><span class="ms-1">Thành viên</span>
-                            </a>
-
                             <a href="/device" class="list-group-item list-group-item-action py-2 ripple " id="device">
                                 <i class="fa-solid fa-laptop"></i>
                                 <span class="ms-1">Thiết bị</span></a
                             >
+                            <a
+                                href="/borrow/device"
+                                class="list-group-item list-group-item-action py-2 ripple "
+                                id="borrowAndReturnDevice"
+                                aria-current="true"
+                                >
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span class="ms-1">Mượn và trả thiết bị</span>
+                            </a>
                             <a href="/processing" class="list-group-item list-group-item-action py-2 ripple " id="processing"
                                >
                                 <i class="fa-solid fa-circle-exclamation"></i>
@@ -99,7 +108,7 @@
                 studyAreaStatistical.classList.add("active");
             } else if (url.startsWith("/statistical/device")) {
                 deiviceStatistical.classList.add("active");
-            }else if (url.startsWith("/join-study-area")) {
+            } else if (url.startsWith("/join-study-area")) {
                 joinStudyArea.classList.add("active");
             } else if (url.startsWith("/member")) {
                 member.classList.add("active");

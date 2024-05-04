@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html th:replace="/fragment/page.html
+      :: page('Trả thiết bị',~{ :: .content})">
+    <div class="content">
+        <div th:replace="/fragment/alert.html :: alert"></div>
+        <div class="d-flex">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="device-action" id="borrow" onclick="gotoBorrowPage();">
+                <label class="form-check-label" for="borrow">
+                    Muợn thiết bị
+                </label>
+            </div>
+            <div class="form-check ms-2">
+                <input class="form-check-input" type="radio" name="device-action" id="bookedDevice" onclick="gotoBookedDevicePage();">
+                <label class="form-check-label" for="bookedDevice">
+                    Thiết bị đã được đặt chỗ
+                </label>
+            </div>
+            <div class="form-check ms-2">
+                <input class="form-check-input" type="radio" name="device-action" id="return" onclick="gotoReturnPage();">
+                <label class="form-check-label" for="return">
+                    Trả thiết bị
+                </label>
+            </div>
+        </div>
+        <h1 class="my-4">Trả thiết bị</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã số thiết bị</th>
+                    <th>Tên thiết bị</th>
+                    <th>Mã thành viên</th>
+                    <th>Tên thành viên</th>
+                    <th>Trả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="device : ${devicesList}">
+                    <td th:text="${device[0]}"></td>
+                    <td th:text="${device[1]}"></td>
+                    <td th:text="${device[2]}"></td>
+                    <td th:text="${device[3]}"></td>
+                    <td>
+                        <form th:action="@{/return/{deviceId}(deviceId=${device[0]})}" method="post">
+                            <button class="btn btn-primary" type="submit"> <i class="fa-solid fa-rotate-left"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
+            function gotoReturnPage() {
+                window.location.href = '/return/device';
+            }
+             function gotoBookedDevicePage() {
+                window.location.href = '/borrow/booked-device';
+            }
+            function gotoBorrowPage() {
+                window.location.href = '/borrow/device';
+            }
+        </script>
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </div>
+
+
+</body>
+</html>

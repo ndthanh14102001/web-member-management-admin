@@ -2,8 +2,6 @@ package com.member_management.service;
 
 import com.member_management.modules._UsageInformation;
 import com.member_management.repository.UsageInformationRepository;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,6 @@ public class StatisticalService {
     }
 
     public List<Object[]> getDevices(int deviceStatus, Date startTime, Date endTime) {
-        LocalDateTime test = startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         switch (deviceStatus) {
             case STATISTICAL_NOT_AVAILABLE_DEVICES -> {
                 return usageInformationRepository.getNotAvailableDevices();

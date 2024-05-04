@@ -95,4 +95,5 @@ public class DeviceController {
         deviceService.updateDevice(deviceId, updatedDevice);
         return "redirect:/device";
     }
+    
 }

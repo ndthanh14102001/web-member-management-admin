@@ -1,12 +1,13 @@
 package com.member_management.repository;
 
 import com.member_management.modules._UsageInformation;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UsageInformationRepository extends JpaRepository<_UsageInformation, Integer> {
 
@@ -35,14 +36,14 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
         WHERE u.maTB.maTB IS NOT NULL
     )""")
     List<Object[]> getAvailableDevices();
-    
+
     @Query("""
     SELECT u.maTB.maTB, u.maTB.tenTB, u.maTV.maTV, u.maTV.hoTen
     FROM _UsageInformation u
     WHERE u.tGVao IS NULL AND u.tGMuon IS NOT NULL AND u.tGTra IS NULL
     """)
     List<Object[]> getNotAvailableDevices();
-    
+
     @Query("""
     SELECT u.maTB.maTB, u.maTB.tenTB, u.maTV.maTV, u.maTV.hoTen, u.tGDatCho
     FROM _UsageInformation u
@@ -55,4 +56,26 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
     ORDER BY u.tGDatCho DESC
     """)
     List<Object[]> getBookedDevices(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    
+    @Query("""
+    SELECT u
+    FROM _UsageInformation u
+    WHERE u.tGVao IS NULL 
+           AND u.tGMuon IS NULL 
+           AND u.tGTra IS NULL
+           AND u.tGDatCho IS NOT NULL
+           AND YEAR(u.tGDatCho) = YEAR(CURRENT_DATE()) 
+           AND MONTH(u.tGDatCho) = MONTH(CURRENT_DATE()) 
+           AND DAY(u.tGDatCho) = DAY(CURRENT_DATE())
+    ORDER BY u.tGDatCho DESC
+    """)
+    List<_UsageInformation> getBookedDevicesAtCurrentTime();
+    
+    @Transactional
+    @Modifying
+    @Query("UPDATE _UsageInformation "
+            + "SET tGTra = CURRENT_TIMESTAMP() "
+            + "WHERE maTB.maTB = :maTB "
+            + "and tGTra is NULL")
+    void returnDevice(@Param("maTB") String maTB);
 }

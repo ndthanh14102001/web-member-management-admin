@@ -8,13 +8,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface DeviceRepository extends JpaRepository<_Device, Integer> {
+
     @Query("FROM _Device d")
     List<_Device> getAllDevices();
+
     @Modifying
     @Query("DELETE FROM _Device d WHERE d.maTB = :deviceId")
     void deleteById(@Param("deviceId") String deviceId);
+
     @Query("SELECT d FROM _Device d WHERE d.maTB = :maTB")
     _Device findByMaTB(@Param("maTB") String maTB);
+
     @Query("FROM _Device d WHERE d.tenTB LIKE %:keyword%")
     List<_Device> searchDevicesByName(@Param("keyword") String keyword);
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:replace="/fragment/page.html
+      :: page('Thành viên' , ~{:: .content})">
+    <div class="content">
+        <h1 class="my-4">Chọn thành viên mượn thiết bị</h1>
+        <form method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mã số thành viên</th>
+                        <th>Email</th>
+                        <th>Họ tên</th>
+                        <th>Khoa</th>
+                        <th>Ngành</th>
+                        <th>Số điện thoại</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="member : ${members}">
+                        <td>
+                            <input class="form-check-input" type="radio" name="selectedMemberId" id="selectedMemberId" th:value="${member.maTV}">
+                        </td>
+                        <td th:text="${member.maTV}"></td>
+                        <td th:text="${member.email}"></td>
+                        <td th:text="${member.hoTen}"></td>
+                        <td th:text="${member.khoa}"></td>
+                        <td th:text="${member.nganh}"></td>
+                        <td th:text="${member.sdt}"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary">Đồng ý</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
