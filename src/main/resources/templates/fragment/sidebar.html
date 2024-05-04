@@ -24,12 +24,36 @@
                         <hr class="hr" />
                         <div class="list-group list-group-flush mx-3 ">
                             <a
-                                href="/"
+                                href="#"
                                 class="list-group-item list-group-item-action py-2 ripple "
                                 id="statistical"
                                 aria-current="true"
                                 >
                                 <i class="fas fa-chart-area fa-fw"></i><span class="ms-1">Thống kê</span>
+                            </a>
+                            <a
+                                href="/statistical/study-area"
+                                class="list-group-item list-group-item-action py-2 ps-4 ripple "
+                                id="study-area-statistical"
+                                aria-current="true"
+                                >
+                                <span class="ms-1">Khu vực học tập</span>
+                            </a>
+                            <a
+                                href="/statistical/device"
+                                class="list-group-item list-group-item-action py-2 ps-4 ripple "
+                                id="deivice-statistical"
+                                aria-current="true"
+                                >
+                                <span class="ms-1">Thiết bị</span>
+                            </a>
+                            <a
+                                href="/"
+                                class="list-group-item list-group-item-action py-2 ps-4 ripple "
+                                id="processing-statistical"
+                                aria-current="true"
+                                >
+                                <span class="ms-1">Xử lý vi phạm</span>
                             </a>
                             <a
                                 href="/join-study-area"
@@ -62,8 +86,8 @@
         </div>
         <script>
             var url = window.location.pathname;
-            console.log(url);
-            var statistical = document.getElementById("statistical");
+            var studyAreaStatistical = document.getElementById("study-area-statistical");
+            var deiviceStatistical = document.getElementById("deivice-statistical");
             var joinStudyArea = document.getElementById("join-study-area");
             var member = document.getElementById("member");
             var device = document.getElementById("device");
@@ -71,9 +95,11 @@
 
             console.log(device);
 
-            if (url === "/") {
-                statistical.classList.add("active");
-            } else if (url.startsWith("/join-study-area")) {
+            if (url.startsWith("/statistical/study-area")) {
+                studyAreaStatistical.classList.add("active");
+            } else if (url.startsWith("/statistical/device")) {
+                deiviceStatistical.classList.add("active");
+            }else if (url.startsWith("/join-study-area")) {
                 joinStudyArea.classList.add("active");
             } else if (url.startsWith("/member")) {
                 member.classList.add("active");

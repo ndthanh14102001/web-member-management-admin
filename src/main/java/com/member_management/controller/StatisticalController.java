@@ -32,7 +32,12 @@ public class StatisticalController {
     }
 
     @GetMapping("/")
-    public String getStatistical(Model model,
+    public String getStatistical() {
+        return "redirect:/statistical/study-area";
+    }
+
+    @GetMapping("/statistical/study-area")
+    public String getStudyAreaStatistical(Model model,
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         if (startDate == null) {
@@ -45,7 +50,9 @@ public class StatisticalController {
             // Nếu không có endDate được truyền, lấy endDate là ngày hiện tại
             endDate = new Date();
         }
-
+        endDate.setHours(23);
+        endDate.setMinutes(59);
+        endDate.setSeconds(59);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         model.addAttribute("startDate", dateFormat.format(startDate));
         model.addAttribute("endDate", dateFormat.format(endDate));
@@ -53,6 +60,11 @@ public class StatisticalController {
         List<_UsageInformation> studyAreaHistory = statisticalService.getStudyAreaHistory(startDate, endDate);
         model.addAttribute("studyAreaHistory", studyAreaHistory);
         model.addAttribute("totalResult", studyAreaHistory.size());
-        return "statistical";
+        return "study-area-statistical";
+    }
+
+    @GetMapping("/statistical/device")
+    public String getDeviceStatistical() {
+        return "device-statistical";
     }
 }
