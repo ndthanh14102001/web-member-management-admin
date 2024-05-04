@@ -66,14 +66,13 @@ public class StatisticalController {
             @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endDate,
             @RequestParam(name = "device-status", required = false) String deviceStatus) {
         if (startDate == null) {
-            // Nếu không có startDate được truyền, lấy startDate là ngày hiện tại trừ đi 7 ngày
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -7);
-            startDate = calendar.getTime();
+            startDate = new Date();
         }
         if (endDate == null) {
-            // Nếu không có endDate được truyền, lấy endDate là ngày hiện tại
-            endDate = new Date();
+            // Nếu không có startDate được truyền, lấy startDate là ngày hiện tại trừ đi 7 ngày
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 7);
+            endDate = calendar.getTime();
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         model.addAttribute("startDate", dateFormat.format(startDate));

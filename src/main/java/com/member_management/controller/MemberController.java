@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -23,20 +23,21 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class MemberController {
+
     private final MemberService memberInformationService;
-    
+
     @Autowired
-    public MemberController(MemberService memberInformationService){
+    public MemberController(MemberService memberInformationService) {
         this.memberInformationService = memberInformationService;
     }
-    
+
     @GetMapping("/member")
-    public String getAllMembersInformation(Model model){
+    public String getAllMembersInformation(Model model) {
         List<_Member> membersList = memberInformationService.findAllUsageInformation();
-        model.addAttribute("membersInformationList",membersList);
+        model.addAttribute("membersInformationList", membersList);
         return "member";
     }
-    
+
     @PostMapping("/member")
     public String searchMembersByName(@RequestParam("keyword") String keyword, Model model) {
         List<_Member> searchResults = memberInformationService.searchMembersByName(keyword);
@@ -44,12 +45,12 @@ public class MemberController {
         model.addAttribute("keyword", keyword);
         return "member";
     }
-    
+
     @GetMapping("/add-member")
-    public String showAddMemberForm(){
+    public String showAddMemberForm() {
         return "add-member";
     }
-    
+
     @PostMapping("/add-member")
     public String addMember(@ModelAttribute _Member member, Model model) {
         if (member.getMaTV() == null || member.getMaTV().isEmpty()
@@ -62,26 +63,31 @@ public class MemberController {
 
         if (!isValidMaTV(member.getMaTV())) {
             model.addAttribute("error", "Mã thành viên không hợp lệ!");
-            
+
             return "add-member";
         }
         memberInformationService.addMember(member);
         model.addAttribute("message", "Thêm thành viên thành công !");
         return "add-member";
     }
-    
+
     private boolean isValidMaTV(String maTV) {
         // Kiểm tra maTV có đúng định dạng hay không (10 kí tự và là số)
         return maTV.matches("\\d{10}");
     }
-    
+
     @PostMapping("/delete-member/{memberId}")
-    public String deleteMember(@PathVariable int memberId, Model model) {
-        memberInformationService.deleteMember(memberId);
-        model.addAttribute("message", "Xóa thành viên thành công!");
+    public String deleteMember(@PathVariable int memberId, RedirectAttributes redirectAttributes) {
+        try {
+            memberInformationService.deleteMember(memberId);
+            redirectAttributes.addFlashAttribute("successMessage", "Xóa thành viên thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Không thể xóa thành viên !");
+        }
+
         return "redirect:/member"; // Điều hướng về danh sách thành viên sau khi xóa
     }
-    
+
     @GetMapping("/edit-member/{memberId}")
     public String showEditMemberForm(@PathVariable int memberId, Model model) {
         _Member member = memberInformationService.getMemberById(memberId);
@@ -106,5 +112,5 @@ public class MemberController {
         memberInformationService.updateMember(memberId, updatedMember);
         return "redirect:/member";
     }
-    
+
 }

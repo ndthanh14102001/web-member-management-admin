@@ -40,6 +40,16 @@ public class BorrowAndReturnDeviceController {
         return "select-member-to-borrow-device";
     }
 
+    @PostMapping("/select-member-to-borrow/{deviceId}")
+    public String borrowDevice(Model model,
+            RedirectAttributes redirectAttributes,
+            @PathVariable("deviceId") String deviceId,
+            @RequestParam("selectedMemberId") String maTV) {
+        deviceService.borrowDevice(deviceId, maTV);
+        redirectAttributes.addFlashAttribute("successMessage", "Mươn thiết bị " + deviceId + " thành công !");
+        return "redirect:/borrow/device";
+    }
+
     @GetMapping("/borrow/booked-device")
     public String getBookedDevices(Model model) {
         List<_UsageInformation> devicesList = deviceService.getBookedDevicesInCurrentDate();
