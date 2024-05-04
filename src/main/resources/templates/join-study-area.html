@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:replace="/fragment/page.html
+      :: page('Vào khu vực học tập' , ~{:: .content})">
+    <div class="content">
+        <div th:replace="/fragment/alert.html :: alert"></div>
+        <h1 class="my-4">Vào khu vực học tập</h1>
+
+        <form class="form-inline d-flex" method="get" action="/join-study-area">
+            <div class="form-group  mr-2">
+                <input class="form-control" type="text" name="keyword" placeholder="Mã thành viên" th:value="${keyword}"/>
+            </div>
+            <button class="btn btn-primary ms-2" type="submit">Tìm kiếm</button>
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã số thành viên</th>
+                    <th>Email</th>
+                    <th>Họ tên</th>
+                    <th>Khoa</th>
+                    <th>Ngành</th>
+                    <th>Số điện thoại</th>
+                    <th>Vào khu vực học tập</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="member : ${membersInformationList}">
+                    <td th:text="${member.maTV}"></td>
+                    <td th:text="${member.email}"></td>
+                    <td th:text="${member.hoTen}"></td>
+                    <td th:text="${member.khoa}"></td>
+                    <td th:text="${member.nganh}"></td>
+                    <td th:text="${member.sdt}"></td>
+                    <td>
+                        <form method="post" action='/join-study-area'>
+                            <input type='hidden' th:value="${member.maTV}" name='maTV'/>
+                            <button class="btn btn-sm btn-info"> <i class="fa-solid fa-right-to-bracket"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

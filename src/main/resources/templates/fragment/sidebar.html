@@ -31,6 +31,15 @@
                                 >
                                 <i class="fas fa-chart-area fa-fw"></i><span class="ms-1">Thống kê</span>
                             </a>
+                            <a
+                                href="/join-study-area"
+                                class="list-group-item list-group-item-action py-2 ripple "
+                                id="joinStudyArea"
+                                aria-current="true"
+                                >
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                                <span class="ms-1">Vào khu vực học tập</span>
+                            </a>
                             <a href="/member" class="list-group-item list-group-item-action py-2 ripple" id="member">
                                 <i class="fa-solid fa-users"></i><span class="ms-1">Thành viên</span>
                             </a>
@@ -55,6 +64,7 @@
             var url = window.location.pathname;
             console.log(url);
             var statistical = document.getElementById("statistical");
+            var joinStudyArea = document.getElementById("join-study-area");
             var member = document.getElementById("member");
             var device = document.getElementById("device");
             var processing = document.getElementById("processing");
@@ -63,6 +73,8 @@
 
             if (url === "/") {
                 statistical.classList.add("active");
+            } else if (url.startsWith("/join-study-area")) {
+                joinStudyArea.classList.add("active");
             } else if (url.startsWith("/member")) {
                 member.classList.add("active");
             } else if (url.startsWith("/device")) {
