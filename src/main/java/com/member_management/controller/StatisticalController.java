@@ -38,22 +38,19 @@ public class StatisticalController {
 
     @GetMapping("/statistical/study-area")
     public String getStudyAreaStatistical(Model model,
-            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endDate) {
         if (startDate == null) {
-            // Nếu không có startDate được truyền, lấy startDate là ngày hiện tại trừ đi 30 ngày
+            // Nếu không có startDate được truyền, lấy startDate là ngày hiện tại trừ đi 7 ngày
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -30);
+            calendar.add(Calendar.DATE, -7);
             startDate = calendar.getTime();
         }
         if (endDate == null) {
             // Nếu không có endDate được truyền, lấy endDate là ngày hiện tại
             endDate = new Date();
         }
-        endDate.setHours(23);
-        endDate.setMinutes(59);
-        endDate.setSeconds(59);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         model.addAttribute("startDate", dateFormat.format(startDate));
         model.addAttribute("endDate", dateFormat.format(endDate));
 
@@ -65,8 +62,26 @@ public class StatisticalController {
 
     @GetMapping("/statistical/device")
     public String getDeviceStatistical(Model model,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endDate,
             @RequestParam(name = "device-status", required = false) String deviceStatus) {
-        List<Object[]> devices = deviceStatus == null ? statisticalService.getDevices(statisticalService.STATISTICAL_AVAILABLE_DEVICES) : statisticalService.getDevices(Integer.parseInt(deviceStatus));
+        if (startDate == null) {
+            // Nếu không có startDate được truyền, lấy startDate là ngày hiện tại trừ đi 7 ngày
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -7);
+            startDate = calendar.getTime();
+        }
+        if (endDate == null) {
+            // Nếu không có endDate được truyền, lấy endDate là ngày hiện tại
+            endDate = new Date();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        model.addAttribute("startDate", dateFormat.format(startDate));
+        model.addAttribute("endDate", dateFormat.format(endDate));
+
+        List<Object[]> devices = deviceStatus == null
+                ? statisticalService.getDevices(statisticalService.STATISTICAL_AVAILABLE_DEVICES, startDate, endDate)
+                : statisticalService.getDevices(Integer.parseInt(deviceStatus), startDate, endDate);
         model.addAttribute("devices", devices);
         model.addAttribute("numberOfDevice", devices.size());
         model.addAttribute("deviceStatus", deviceStatus);

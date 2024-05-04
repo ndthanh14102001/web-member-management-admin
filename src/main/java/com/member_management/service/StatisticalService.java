@@ -2,6 +2,8 @@ package com.member_management.service;
 
 import com.member_management.modules._UsageInformation;
 import com.member_management.repository.UsageInformationRepository;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +26,16 @@ public class StatisticalService {
         return usageInformationRepository.getStudyAreaHistory(startDate, endDate);
     }
 
-    public List<Object[]> getDevices(int deviceStatus) {
+    public List<Object[]> getDevices(int deviceStatus, Date startTime, Date endTime) {
+        LocalDateTime test = startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         switch (deviceStatus) {
             case STATISTICAL_NOT_AVAILABLE_DEVICES -> {
                 return usageInformationRepository.getNotAvailableDevices();
             }
             case STATISTICAL_BOOKED_DEVICES -> {
-                return usageInformationRepository.getBookedDevices();
+                return usageInformationRepository.getBookedDevices(
+                        startTime,
+                        endTime);
             }
             default -> {
                 return usageInformationRepository.getAvailableDevices();

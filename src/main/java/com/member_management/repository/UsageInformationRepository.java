@@ -1,6 +1,7 @@
 package com.member_management.repository;
 
 import com.member_management.modules._UsageInformation;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -49,7 +50,9 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
            AND u.tGMuon IS NULL 
            AND u.tGTra IS NULL
            AND u.tGDatCho IS NOT NULL
+           AND (:startTime IS NULL OR u.tGDatCho >= :startTime)
+           AND (:endTime IS NULL OR u.tGDatCho <= :endTime)
     ORDER BY u.tGDatCho DESC
     """)
-    List<Object[]> getBookedDevices();
+    List<Object[]> getBookedDevices(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

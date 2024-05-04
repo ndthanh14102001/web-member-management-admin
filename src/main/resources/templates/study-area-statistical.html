@@ -6,20 +6,20 @@
 
         <h4 class="my-4">Khu vực học tập</h4>
         <form 
-            id="bookingForm" 
             class="d-flex align-items-end mb-3 mt-3" 
             method="Get" th:unless="${bookingTime}"
             onSubmit="submitForm(event)"
             action="/statistical/study-area"
             >
+
             <div class="me-2">
                 <label for="startDate" class="form-label">Từ ngày</label>
-                <input type="date" id="startDate"  class="form-control" name="startDate"
+                <input type="datetime-local" id="startDate"  class="form-control" name="startDate"
                        min="" th:value="${startDate}" required>
             </div>
             <div class="me-2">
                 <label for="endDate" class="form-label">Đến ngày</label>
-                <input type="date" id="endDate"  class="form-control" name="endDate"
+                <input type="datetime-local" id="endDate"  class="form-control" name="endDate"
                        min="" th:value="${endDate}" required>
             </div>
             <button class="btn btn-primary" type="submit">Đồng ý</button>

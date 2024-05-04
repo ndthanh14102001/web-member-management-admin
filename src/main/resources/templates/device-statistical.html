@@ -4,13 +4,26 @@
     <div class="content">
         <h1 class="my-4">Thống kê</h1>
 
-        <form method="get" action='/statistical/device' class='d-flex'>
+        <form method="get" action='/statistical/device' >
             <select class="form-select" aria-label="device-status" name="device-status" >
                 <option value="1" th:selected="${deviceStatus == '1'}">Thiết bị sẵn sàng</option>
                 <option value="2" th:selected="${deviceStatus == '2'}">Thiết bị đang được mượn</option>
                 <option value="3" th:selected="${deviceStatus == '3'}">Thiết bị đang được đặt chỗ</option>
             </select>
-            <button class='btn btn-primary ms-2 d-flex align-items-center'>
+            <div  th:if="${deviceStatus == '3'}" class="d-flex mt-2">
+                <div class="me-2">
+                    <label for="startDate" class="form-label">Từ ngày</label>
+                    <input type="datetime-local" id="startDate"  class="form-control" name="startDate"
+                           min="" th:value="${startDate}" required>
+                </div>
+                <div class="me-2">
+                    <label for="endDate" class="form-label">Đến ngày</label>
+                    <input type="datetime-local" id="endDate"  class="form-control" name="endDate"
+                           min="" th:value="${endDate}" required>
+                </div>
+            </div>
+
+            <button class='btn btn-primary mt-2 d-flex align-items-center'>
                 <i class="fa-solid fa-filter me-2"></i>
                 <span>Lọc</span>
             </button>
@@ -32,7 +45,7 @@
                     <td th:text="${deviceInfo[1]}"></td>
                     <td th:text="${deviceInfo.length >= 3 ? deviceInfo[2] : ''}"></td>
                     <td th:text="${deviceInfo.length >= 4 ? deviceInfo[3] : ''}"></td>
-                    <td th:text="${deviceInfo.length >= 5 ? #dates.format(deviceInfo[4], 'dd-MM-yyyy HH:mm') : ''}"></td>
+                    <td th:text="${deviceInfo.length >= 5 ? #dates.format(deviceInfo[4], 'dd-MM-yyyy hh:mm a') : ''}"></td>
                 </tr>
             </tbody>
         </table>
