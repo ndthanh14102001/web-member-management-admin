@@ -101,7 +101,8 @@
             var member = document.getElementById("member");
             var device = document.getElementById("device");
             var processing = document.getElementById("processing");
-
+            var joinStudyArea = document.getElementById("joinStudyArea");
+            var borrowAndReturnDevice = document.getElementById("borrowAndReturnDevice");
             console.log(device);
 
             if (url.startsWith("/statistical/study-area")) {
@@ -116,6 +117,10 @@
                 device.classList.add("active");
             } else if (url.startsWith("/processing")) {
                 processing.classList.add("active");
+            } else if (url.startsWith("/borrow") || url.startsWith("/return")) {
+                borrowAndReturnDevice.classList.add("active");
+            } else if (url.startsWith("/join-study-area")) {
+                joinStudyArea.classList.add("active");
             }
         </script>
     </body>

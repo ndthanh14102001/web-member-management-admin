@@ -47,12 +47,13 @@ public class MemberController {
     }
 
     @GetMapping("/add-member")
-    public String showAddMemberForm() {
+    public String showAddMemberForm(Model model) {
+        model.addAttribute("member", new _Member());
         return "add-member";
     }
 
     @PostMapping("/add-member")
-    public String addMember(@ModelAttribute _Member member, Model model) {
+    public String addMember(RedirectAttributes redirectAttributes, @ModelAttribute _Member member, Model model) {
         if (member.getMaTV() == null || member.getMaTV().isEmpty()
                 || member.getHoTen() == null || member.getHoTen().isEmpty()
                 || member.getEmail() == null || member.getEmail().isEmpty()
@@ -61,14 +62,16 @@ public class MemberController {
             return "add-member";
         }
 
-        if (!isValidMaTV(member.getMaTV())) {
-            model.addAttribute("error", "Mã thành viên không hợp lệ!");
-
+        try {
+            member.checkMaTVFormat();
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("member", member);
             return "add-member";
         }
         memberInformationService.addMember(member);
-        model.addAttribute("message", "Thêm thành viên thành công !");
-        return "add-member";
+        redirectAttributes.addFlashAttribute("successMessage", "Thêm thành viên thành công !");
+        return "redirect:/member";
     }
 
     private boolean isValidMaTV(String maTV) {
@@ -77,39 +80,45 @@ public class MemberController {
     }
 
     @PostMapping("/delete-member/{memberId}")
-    public String deleteMember(@PathVariable int memberId, RedirectAttributes redirectAttributes) {
+    public String deleteMember(@PathVariable String memberId, RedirectAttributes redirectAttributes) {
         try {
             memberInformationService.deleteMember(memberId);
             redirectAttributes.addFlashAttribute("successMessage", "Xóa thành viên thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Không thể xóa thành viên !");
+            e.printStackTrace();
         }
 
         return "redirect:/member"; // Điều hướng về danh sách thành viên sau khi xóa
     }
 
     @GetMapping("/edit-member/{memberId}")
-    public String showEditMemberForm(@PathVariable int memberId, Model model) {
+    public String showEditMemberForm(@PathVariable String memberId, Model model) {
         _Member member = memberInformationService.getMemberById(memberId);
         model.addAttribute("member", member);
         return "edit-member";
     }
 
     @PostMapping("/edit-member/{memberId}")
-    public String updateMember(@PathVariable int memberId, @ModelAttribute("member") _Member updatedMember, Model model) {
+    public String updateMember(RedirectAttributes redirectAttributes, @PathVariable String memberId, @ModelAttribute("member") _Member updatedMember, Model model) {
         if (updatedMember.getMaTV() == null || updatedMember.getMaTV().isEmpty()
                 || updatedMember.getHoTen() == null || updatedMember.getHoTen().isEmpty()
                 || updatedMember.getEmail() == null || updatedMember.getEmail().isEmpty()
                 || updatedMember.getPassword() == null || updatedMember.getPassword().isEmpty()) {
-            model.addAttribute("error", "Vui lòng điền đầy đủ thông tin!");
-            return "edit-member";
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin!");
+            redirectAttributes.addFlashAttribute("member", updatedMember);
+            return "redicrect:/edit-member";
         }
 
-        if (!isValidMaTV(updatedMember.getMaTV())) {
-            model.addAttribute("error", "MaTV không hợp lệ!");
-            return "edit-member";
+        try {
+            updatedMember.checkMaTVFormat();
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("member", updatedMember);
+            return "redirect:/edit-member";
         }
         memberInformationService.updateMember(memberId, updatedMember);
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thông tin thành viên thành công !");
         return "redirect:/member";
     }
 

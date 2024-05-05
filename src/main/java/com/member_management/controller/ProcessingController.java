@@ -44,8 +44,18 @@ public class ProcessingController {
         List<_Processing> processingList = processingRepository.findAllProcessing();
 
         model.addAttribute("processingList", processingList);
-        model.addAttribute("totalAmount", processingList.size());
+        model.addAttribute("totalAmount", calculateAmount(processingList));
         return "processing";
+    }
+
+    private double calculateAmount(List<_Processing> processingList) {
+        double amount = 0;
+        for (_Processing processing : processingList) {
+            if (processing.getSoTien() != null) {
+                amount += processing.getSoTien();
+            }
+        }
+        return amount;
     }
 
     @GetMapping("/add-processing")

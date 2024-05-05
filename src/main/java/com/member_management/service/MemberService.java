@@ -15,34 +15,35 @@ public class MemberService {
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
-    
+
     public List<_Member> findAllUsageInformation() {
         List<_Member> members = memberRepository.getAllMembersInformation();
         return members;
     }
+
     public List<_Member> findAllUsageInformation(String maTV) {
         List<_Member> members = memberRepository.findByMaTV(maTV);
         return members;
     }
-    
+
     public List<_Member> searchMembersByName(String keyword) {
         return memberRepository.searchMembersByName(keyword);
     }
-    
-    public void addMember(_Member member){
+
+    public void addMember(_Member member) {
         memberRepository.save(member);
     }
-    
-    public void deleteMember(int memberId) {
+
+    public void deleteMember(String memberId) {
         memberRepository.deleteById(memberId);
     }
-    
-    public _Member getMemberById(int memberId) {
-        return memberRepository.findByMaTV(memberId);
+
+    public _Member getMemberById(String memberId) {
+        return memberRepository.findByMaTV(memberId).size() >= 1 ? memberRepository.findByMaTV(memberId).get(0) : null;
     }
 
-    public void updateMember(int memberId, _Member updatedMember) {
-        _Member existingMember = memberRepository.findByMaTV(memberId);
+    public void updateMember(String memberId, _Member updatedMember) {
+        _Member existingMember = getMemberById(memberId);
         if (existingMember != null) {
             existingMember.setHoTen(updatedMember.getHoTen());
             existingMember.setPassword(updatedMember.getPassword());
@@ -53,5 +54,5 @@ public class MemberService {
             memberRepository.save(existingMember);
         }
     }
-    
+
 }
