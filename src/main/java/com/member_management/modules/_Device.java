@@ -86,6 +86,12 @@ public class _Device implements Serializable {
         this.usageInformationCollection = usageInformationCollection;
     }
 
+    public void Validate() throws Exception {
+        if (String.valueOf(maTB).length() != 11) {
+            throw new Exception("Mã thiết bị phải có 11 ký tự");
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -110,5 +116,5 @@ public class _Device implements Serializable {
     public String toString() {
         return "com.example.demo.modules._Device[ maTB=" + maTB + " ]";
     }
-    
+
 }

@@ -31,7 +31,11 @@ public class DeviceService {
         return deviceRepository.searchDevicesByName(keyword);
     }
 
-    public void addDevice(_Device device) {
+    public void addDevice(_Device device) throws Exception {
+        device.Validate();
+        if(deviceRepository.findByMaTB(device.getMaTB()) != null){
+            throw new Exception("Mã thiết bị đã tồn tại !");
+        }
         deviceRepository.save(device);
     }
 

@@ -2,20 +2,21 @@
 <html th:replace="/fragment/page.html
       :: page('Thêm thiết bị',~{ :: .content})">
     <div class="content">
+        <div th:replace="/fragment/alert.html :: alert"></div>
         <h1>Thêm thiết bị</h1>
 
         <form action="/add-device" method="post">
             <div class="form-group">
                 <label for="maTV">Mã số thiết bị:</label>
-                <input type="text" class="form-control" id="maTB" name="maTB" >
+                <input type="text" class="form-control" id="maTB" name="maTB" th:value="${device.maTB}" required>
             </div>
             <div class="form-group">
                 <label for="tenTB">Tên thiết bị:</label>
-                <input type="text" class="form-control" id="tenTB" name="tenTB" >
+                <input type="text" class="form-control" id="tenTB" name="tenTB" th:value="${device.tenTB}" required>
             </div>
             <div class="form-group">
                 <label for="moTa">Mô tả:</label>
-                <input type="text" class="form-control" id="moTaTB" name="moTaTB" >
+                <input type="text" class="form-control" id="moTaTB" name="moTaTB"  th:value="${device.moTaTB}" >
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Thêm</button>

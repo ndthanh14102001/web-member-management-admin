@@ -40,26 +40,22 @@ public class DeviceController {
     }
 
     @GetMapping("/add-device")
-    public String showAddDeviceForm() {
+    public String showAddDeviceForm(Model model) {
+        model.addAttribute("device", new _Device());
         return "add-device";
     }
 
     @PostMapping("/add-device")
-    public String addDevice(@ModelAttribute _Device device, Model model) {
-        if (device.getMaTB() == null || device.getMaTB().isEmpty()
-                || device.getTenTB() == null || device.getTenTB().isEmpty()) {
-            model.addAttribute("error", "Vui lòng điền đầy đủ thông tin!");
+    public String addDevice(RedirectAttributes redirectAttributes, @ModelAttribute _Device device, Model model) {
+        try {
+            deviceService.addDevice(device);
+        } catch (Exception e) {
+            model.addAttribute("device", device);
+            model.addAttribute("errorMessage", e.getMessage());
             return "add-device";
         }
-
-        if (!isValidMaTB(device.getMaTB())) {
-            model.addAttribute("error", "Mã thiết bị không hợp lệ!");
-
-            return "add-device";
-        }
-        deviceService.addDevice(device);
-        model.addAttribute("message", "Thêm thiết bị thành công !");
-        return "add-device";
+        redirectAttributes.addFlashAttribute("successMessage", "Thêm thiết bị thành công !");
+        return "redirect:/device";
     }
 
     private boolean isValidMaTB(String maTB) {
@@ -68,16 +64,14 @@ public class DeviceController {
     }
 
     @PostMapping("/delete-device/{deviceId}")
-    public String deleteDevice(@PathVariable("deviceId") String deviceId, RedirectAttributes redirectAttributesl) {
+    public String deleteDevice(@PathVariable("deviceId") String deviceId, RedirectAttributes redirectAttributes) {
         try {
             deviceService.deleteDevice(deviceId);
-            redirectAttributesl.addAttribute("redirectAttributesl", "Xóa thiết bị thành công!");
-            return "redirect:/device"; // Điều hướng về danh sách thiết bị sau khi xóa
+            redirectAttributes.addFlashAttribute("successMessage", "Xóa thiết bị thành công!");
         } catch (Exception e) {
-            redirectAttributesl.addFlashAttribute("errorMessage", "Không thể xóa thiết bị !");
-            return "redirect:/device"; // Điều hướng về danh sách thiết bị sau khi xóa
+            redirectAttributes.addFlashAttribute("errorMessage", "Không thể xóa thiết bị !");
         }
-
+        return "redirect:/device"; // Điều hướng về danh sách thiết bị sau khi xóa
     }
 
     @GetMapping("/edit-device/{deviceId}")
