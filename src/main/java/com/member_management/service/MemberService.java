@@ -30,7 +30,11 @@ public class MemberService {
         return memberRepository.searchMembersByName(keyword);
     }
 
-    public void addMember(_Member member) {
+    public void addMember(_Member member) throws Exception {
+        member.checkMaTVFormat();
+        if (!memberRepository.findByMaTV(member.getMaTV()).isEmpty()) {
+            throw new Exception("Mã thành viên đã tồn tại");
+        }
         memberRepository.save(member);
     }
 

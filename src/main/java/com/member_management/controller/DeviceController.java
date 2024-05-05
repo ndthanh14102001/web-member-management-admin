@@ -83,11 +83,6 @@ public class DeviceController {
 
     @PostMapping("/edit-device/{deviceId}")
     public String updateDevice(@PathVariable String deviceId, @ModelAttribute("device") _Device updatedDevice, Model model) {
-        if (updatedDevice.getMaTB() == null || updatedDevice.getMaTB().isEmpty()
-                || updatedDevice.getTenTB() == null || updatedDevice.getTenTB().isEmpty()) {
-            model.addAttribute("error", "Vui lòng điền đầy đủ thông tin!");
-            return "edit-device";
-        }
 
         if (!isValidMaTB(updatedDevice.getMaTB())) {
             model.addAttribute("error", "MaTB không hợp lệ!");

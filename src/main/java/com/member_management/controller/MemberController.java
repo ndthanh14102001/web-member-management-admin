@@ -54,22 +54,14 @@ public class MemberController {
 
     @PostMapping("/add-member")
     public String addMember(RedirectAttributes redirectAttributes, @ModelAttribute _Member member, Model model) {
-        if (member.getMaTV() == null || member.getMaTV().isEmpty()
-                || member.getHoTen() == null || member.getHoTen().isEmpty()
-                || member.getEmail() == null || member.getEmail().isEmpty()
-                || member.getPassword() == null || member.getPassword().isEmpty()) {
-            model.addAttribute("error", "Vui lòng điền đầy đủ thông tin!");
-            return "add-member";
-        }
 
         try {
-            member.checkMaTVFormat();
+            memberInformationService.addMember(member);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("member", member);
             return "add-member";
         }
-        memberInformationService.addMember(member);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm thành viên thành công !");
         return "redirect:/member";
     }
